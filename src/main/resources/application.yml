@@ -1,0 +1,32 @@
+spring:
+  jpa:
+    generate-ddl: 'true'
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: create
+    show-sql: 'true'
+  thymeleaf:
+    cache: 'false'
+  session:
+    jdbc:
+      flush-mode: on_save
+      initialize-schema: always
+      table-name: SPRING_SESSION
+    store-type: jdbc
+  datasource:
+    password: '5AaKk2+S'
+    username: root
+    url: jdbc:mysql://localhost:3306/spring_blog?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Moscow
+  flyway:
+    locations: classpath:db/migration
+  messages:
+    fallback-to-system-locale: 'true'
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+server:
+  port: '8090'
