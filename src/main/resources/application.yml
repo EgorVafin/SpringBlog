@@ -5,7 +5,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: 'true'
   thymeleaf:
     cache: 'false'
@@ -30,3 +30,12 @@ logging:
         security: DEBUG
 server:
   port: '8090'
+
+blog:
+  phone: +7 903 666-44-55
+  title: DevPub
+  subtitle: Рассказы разработчиков
+  email: mail@mail.ru
+  copyright: Дмитрий Сергеев
+  copyrightFrom: 2005
+

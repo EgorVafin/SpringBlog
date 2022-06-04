@@ -36,6 +36,6 @@ public class PostComment {
     @Temporal(TemporalType.TIME)
     private Date time;
 
-    @Column(name = "text",nullable = false,columnDefinition = "TEXT")
+    @Column(name = "text",columnDefinition = "TEXT NOT NULL")
     private String text;
 }

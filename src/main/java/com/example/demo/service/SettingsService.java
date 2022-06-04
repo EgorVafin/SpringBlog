@@ -1,0 +1,18 @@
+package com.example.demo.service;
+
+import com.example.demo.api.response.SettingsResponse;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SettingsService {
+
+    public SettingsResponse getGlobalSettings(){
+        SettingsResponse settingsResponse = new SettingsResponse();
+
+        settingsResponse.setMultiuserMode(true);
+        settingsResponse.setStatisticsIsPublic(true);
+
+        return settingsResponse;
+    }
+
+}

@@ -40,7 +40,7 @@ public class User {
     @Column(name = "code")
     private String code;
 
-    @Column(name = "photo", columnDefinition="TEXT")
+    @Column(name = "photo", columnDefinition="TEXT NULL")
     private String photo;
 
 }

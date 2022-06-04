@@ -24,7 +24,7 @@ public class Post {
     private boolean isActive;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "moderation_status", columnDefinition = "enum('NEW','ACCEPTED','DECLINED')", nullable = false)
+    @Column(name = "moderation_status", columnDefinition = "enum('NEW','ACCEPTED','DECLINED') NOT NULL")
     private Status moderationStatus;
 
     @ManyToOne
@@ -38,7 +38,7 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "text", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "text", columnDefinition = "TEXT NOT NULL")
     private String text;
 
     @Column(name = "view_count", nullable = false)

@@ -1,19 +1,20 @@
 package com.example.demo.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.example.demo.api.response.AuthCheckResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/auth")
 public class ApiAuthController {
 
-    @RequestMapping("/api/auth/**")
+    @RequestMapping("/check")
     @ResponseBody
-    public String apiAuth(){
+    public AuthCheckResponse apiAuthCheck() {
+        AuthCheckResponse authCheckResponse = new AuthCheckResponse();
+        authCheckResponse.setResult(false);
 
-        return "Auth";
+        return authCheckResponse;
     }
 }

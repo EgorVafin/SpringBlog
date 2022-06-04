@@ -25,10 +25,10 @@ public class CaptchaCode {
     @Temporal(TemporalType.TIME)
     private Date time;
 
-    @Column(name = "code", nullable = false, columnDefinition = "TINYTEXT")
+    @Column(name = "code", columnDefinition = "TINYTEXT NOT NULL")
     private String code;
 
-    @Column(name = "secret_code", nullable = false, columnDefinition = "TINYTEXT")
+    @Column(name = "secret_code", columnDefinition = "TINYTEXT NOT NULL")
     private String secretCode;
 
 

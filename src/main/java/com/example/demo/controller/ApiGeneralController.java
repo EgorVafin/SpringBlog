@@ -1,19 +1,41 @@
 package com.example.demo.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.api.response.InitResponse;
+import com.example.demo.api.response.SettingsResponse;
+import com.example.demo.service.SettingsService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class ApiGeneralController {
 
-    @RequestMapping("/api/*")
-    @ResponseBody
-    public String apiGeneral(){
+    private final SettingsService settingsService;
+    private final InitResponse initResponse;
 
-        return "General";
+    @GetMapping("/init")
+    @ResponseBody
+//    public InitResponse apiGeneralInit(@RequestBody InitResponse initResponse)
+    public InitResponse apiGeneralInit() {
+
+        System.out.println(initResponse.getTitle());
+
+        return initResponse;
+    }
+
+    @RequestMapping("/tag")
+    @ResponseBody
+    public String apiGeneralTag() {
+
+        return "General tag";
+    }
+
+    @GetMapping("/settings")
+    public ResponseEntity<SettingsResponse> apiGeneralSettings() {
+
+        return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
     }
 }
