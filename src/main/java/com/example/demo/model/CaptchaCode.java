@@ -3,11 +3,9 @@ package com.example.demo.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "captcha_codes")
@@ -22,8 +20,7 @@ public class CaptchaCode {
     private int id;
 
     @Column(name = "time", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Timestamp time;
 
     @Column(name = "code", columnDefinition = "TINYTEXT NOT NULL")
     private String code;

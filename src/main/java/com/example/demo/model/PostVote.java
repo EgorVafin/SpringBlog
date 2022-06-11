@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
-import org.hibernate.type.ByteType;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "post_votes")
@@ -31,8 +29,7 @@ public class PostVote {
     private Post post;
 
     @Column(name = "time",nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Timestamp time;
 
     @Column(name = "value", nullable = false)
     @Type(type = "org.hibernate.type.ByteType")

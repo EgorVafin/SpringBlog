@@ -5,8 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "posts")
@@ -32,8 +32,7 @@ public class Post {
     private User moderator;
 
     @Column(name = "time", nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Timestamp time;
 
     @Column(name = "title", nullable = false)
     private String title;

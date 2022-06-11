@@ -1,16 +1,15 @@
 package com.example.demo.api.response.post;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class RootPostResponse {
-    private int count;
+
+    private long count;
     private List<PostResponse> posts;
 
-    public RootPostResponse() {
-        posts = new ArrayList<>();
-    }
 }

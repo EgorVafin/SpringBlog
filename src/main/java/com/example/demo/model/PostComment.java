@@ -5,8 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "post_comments")
@@ -33,8 +32,7 @@ public class PostComment {
     private User user;
 
     @Column(name = "time",nullable = false)
-    @Temporal(TemporalType.TIME)
-    private Date time;
+    private Timestamp time;
 
     @Column(name = "text",columnDefinition = "TEXT NOT NULL")
     private String text;

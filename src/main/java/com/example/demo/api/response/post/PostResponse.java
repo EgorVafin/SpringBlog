@@ -14,5 +14,4 @@ public class PostResponse {
     private int dislikeCount;
     private int commentCount;
     private int viewCount;
-
 }
