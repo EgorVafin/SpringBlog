@@ -32,7 +32,7 @@ public class TagResponseProcessor {
                 .map(tag -> new TagItemResponse(tag.getName(), tag.getWeight() * k))
                 .collect(Collectors.toList());
 
-            return new TagRootResponse(tagResponse);
+        return new TagRootResponse(tagResponse);
     }
 
     private double findMaxWeight(List<TagProjection> result) {

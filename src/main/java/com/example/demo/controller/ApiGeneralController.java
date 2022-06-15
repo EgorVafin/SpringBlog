@@ -42,4 +42,10 @@ public class ApiGeneralController {
 
         return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
     }
+
+    @GetMapping("/api/calendar")
+    public void apiGeneralCalendar() {
+
+
+    }
 }
