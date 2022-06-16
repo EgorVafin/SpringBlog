@@ -33,10 +33,10 @@ public class ApiPostController {
 
     @RequestMapping("/api/post/search")
     @ResponseBody
-    public ResponseEntity<RootPostResponse> apiPostSearch(@RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+    public RootPostResponse apiPostSearch(@RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
                                                           @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset,
                                                           @RequestParam(value = "query", required = false, defaultValue = "") String query) {
 
-        return new ResponseEntity<>(postSearchResponseProcessor.process(limit, offset, query), HttpStatus.OK);
+        return postSearchResponseProcessor.process(limit, offset, query);
     }
 }

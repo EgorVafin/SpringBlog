@@ -1,8 +1,10 @@
 package com.example.demo.api.response.post;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 @Data
+//@Accessors(fluent = true)
 public class PostResponse {
 
     private int id;

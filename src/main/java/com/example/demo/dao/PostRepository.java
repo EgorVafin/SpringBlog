@@ -12,9 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends PagingAndSortingRepository<Post, Integer> {
 
-//    @Query("select p from Post p where p.title =:title")
-//    public Page<Post> search(@Param("title") String title, Pageable pageable);
-
     @Query(value = "SELECT p.id, unix_timestamp(p.time) AS postTimestamp, p.title, p.user_id AS userId, p.text AS text, " +
             "p.view_count AS viewCount, " +
             "u.name AS userName," +
@@ -24,9 +21,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
             "FROM posts p " +
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.is_active = 1 AND p.moderation_status = 'ACCEPTED' AND p.time <= NOW() " +
-            "ORDER BY :orderField :orderDirection"  , nativeQuery = true)
+            "ORDER BY :orderField :orderDirection", nativeQuery = true)
     public Page<PostProjection> allPosts(Pageable pageable, @Param("orderField") String orderField, @Param("orderDirection") String orderDirection);
-
 
     @Query(value = "SELECT p.id, unix_timestamp(p.time) AS postTimestamp, p.title, p.user_id AS userId, p.text AS text, " +
             "p.view_count AS viewCount, " +
@@ -37,12 +33,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
             "FROM posts p " +
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.is_active = 1 AND p.moderation_status = 'ACCEPTED' AND p.time <= NOW() AND p.text LIKE :query " +
-            "ORDER BY p.time ASC"  , nativeQuery = true)
+            "ORDER BY p.time ASC", nativeQuery = true)
     public Page<PostProjection> postsSearch(Pageable pageable, @Param("query") String query);
-
-
-
-
 
 }
 

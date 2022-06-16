@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.api.response.InitResponse;
 import com.example.demo.api.response.SettingsResponse;
+import com.example.demo.api.response.calendar.CalendarRootResponse;
 import com.example.demo.api.response.tag.TagRootResponse;
+import com.example.demo.service.CalendarResponseProcessor;
 import com.example.demo.service.SettingsService;
 import com.example.demo.service.TagResponseProcessor;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ public class ApiGeneralController {
     private final InitResponse initResponse;
 
     private final TagResponseProcessor tagResponseProcessor;
+    private final CalendarResponseProcessor calendarResponseProcessor;
 
     @GetMapping("/init")
     @ResponseBody
@@ -43,9 +46,10 @@ public class ApiGeneralController {
         return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/calendar")
-    public void apiGeneralCalendar() {
+    @GetMapping("/calendar")
+    @ResponseBody
+    public CalendarRootResponse apiGeneralCalendar(@RequestParam(value = "year", required = false, defaultValue = "") String year) {
 
-
+        return calendarResponseProcessor.process(year);
     }
 }

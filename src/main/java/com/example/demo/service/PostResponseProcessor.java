@@ -23,6 +23,7 @@ import java.util.Map;
 public class PostResponseProcessor {
 
     private final PostRepository postRepository;
+    private final PostProjectionConverter postProjectionConverter;
 
     public RootPostResponse process(int limit, int offset, ApiPostController.Mode mode) {
 
@@ -38,37 +39,7 @@ public class PostResponseProcessor {
 
         Page<PostProjection> posts = postRepository.allPosts(pageable, modeOrders.get(mode).getFirst(), modeOrders.get(mode).getSecond());
 
-        List<PostResponse> postList = new ArrayList<>();
-        for (PostProjection post : posts) {
-            PostResponse postResponse = new PostResponse();
-
-            postResponse.setId(post.getId());
-            postResponse.setTimestamp(post.getPostTimestamp());
-            postResponse.setUser(new PostUserResponse(post.getUserId(), post.getUserName()));
-            postResponse.setTitle(post.getTitle());
-            postResponse.setAnnounce(processAnnounce(post.getText()));
-            postResponse.setLikeCount(post.getLikesCount());
-            postResponse.setDislikeCount(post.getDislikesCount());
-            postResponse.setCommentCount(post.getCommentsCount());
-            postResponse.setViewCount(post.getViewCount());
-
-            postList.add(postResponse);
-        }
-
-        RootPostResponse response = new RootPostResponse(posts.getTotalElements(), postList);
-
-        return response;
+        return postProjectionConverter.convert(posts);
     }
 
-    private String processAnnounce(String text) {
-
-        String clearText = Jsoup.parse(text).text();
-
-        if (clearText.length() > 150) {
-            clearText = clearText.substring(0, 150);
-        }
-        clearText = clearText + "...";
-
-        return clearText;
-    }
 }
