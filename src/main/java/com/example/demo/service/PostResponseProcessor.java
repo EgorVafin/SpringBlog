@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.api.response.post.PostResponse;
-import com.example.demo.api.response.post.PostUserResponse;
-import com.example.demo.api.response.post.RootPostResponse;
+import com.example.demo.api.response.post.*;
 import com.example.demo.controller.ApiPostController;
 import com.example.demo.dao.PostProjection;
 import com.example.demo.dao.PostRepository;
@@ -27,9 +25,7 @@ public class PostResponseProcessor {
 
     public RootPostResponse process(int limit, int offset, ApiPostController.Mode mode) {
 
-        int page = (int) Math.ceil((double) offset / limit);
-        Pageable pageable = PageRequest.of(page, limit);
-
+        Pageable pageable = createPageable(limit, offset);
         Map<ApiPostController.Mode, Tuple> modeOrders = Map.of(
                 ApiPostController.Mode.recent, new Tuple("p.time", "desc"),
                 ApiPostController.Mode.popular, new Tuple("commentsCount", "desc"),
@@ -40,6 +36,39 @@ public class PostResponseProcessor {
         Page<PostProjection> posts = postRepository.allPosts(pageable, modeOrders.get(mode).getFirst(), modeOrders.get(mode).getSecond());
 
         return postProjectionConverter.convert(posts);
+    }
+
+    public RootPostResponse searchByDate(String date, int limit, int offset) {
+
+        Pageable pageable = createPageable(limit, offset);
+        Page<PostProjection> posts = postRepository.postsByDate(pageable, date);
+
+        return postProjectionConverter.convert(posts);
+    }
+
+    public RootPostResponse searchPost(int limit, int offset, String query) {
+
+        Pageable pageable = createPageable(limit, offset);
+        query = "%" + query + "%";
+        Page<PostProjection> posts = postRepository.postsSearch(pageable, query);
+
+        return postProjectionConverter.convert(posts);
+    }
+
+    public RootPostResponse searchByTag(String tag, Integer limit, Integer offset) {
+
+        Pageable pageable = createPageable(limit, offset);
+        Page<PostProjection> posts = postRepository.postsByTag(pageable, tag);
+
+        return postProjectionConverter.convert(posts);
+    }
+
+    private Pageable createPageable(Integer limit, Integer offset) {
+
+        int page = (int) Math.ceil((double) offset / limit);
+        return PageRequest.of(page, limit);
+
+
     }
 
 }

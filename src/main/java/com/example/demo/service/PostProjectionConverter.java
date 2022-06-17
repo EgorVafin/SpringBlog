@@ -10,30 +10,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostProjectionConverter {
 
     public RootPostResponse convert(Page<PostProjection> posts) {
 
-        List<PostResponse> postList = new ArrayList<>();
-        for (PostProjection post : posts) {
-            PostResponse postResponse = new PostResponse();
+        List<PostResponse> postList = posts.stream().map(post -> new PostResponse()
+                        .id(post.getId())
+                        .timestamp(post.getPostTimestamp())
+                        .user(new PostUserResponse(post.getUserId(), post.getUserName()))
+                        .title(post.getTitle())
+                        .announce(processAnnounce(post.getText()))
+                        .likeCount(post.getLikesCount())
+                        .dislikeCount(post.getDislikesCount())
+                        .commentCount(post.getCommentsCount())
+                        .viewCount(post.getViewCount()))
+                .collect(Collectors.toList());
 
-            postResponse.setId(post.getId());
-            postResponse.setTimestamp(post.getPostTimestamp());
-            postResponse.setUser(new PostUserResponse(post.getUserId(), post.getUserName()));
-            postResponse.setTitle(post.getTitle());
-            postResponse.setAnnounce(processAnnounce(post.getText()));
-            postResponse.setLikeCount(post.getLikesCount());
-            postResponse.setDislikeCount(post.getDislikesCount());
-            postResponse.setCommentCount(post.getCommentsCount());
-            postResponse.setViewCount(post.getViewCount());
-            postList.add(postResponse);
-        }
-        RootPostResponse response = new RootPostResponse(posts.getTotalElements(), postList);
-
-        return response;
+        return new RootPostResponse(posts.getTotalElements(), postList);
     }
 
     private String processAnnounce(String text) {
