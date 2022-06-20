@@ -67,8 +67,6 @@ public class PostResponseProcessor {
 
         int page = (int) Math.ceil((double) offset / limit);
         return PageRequest.of(page, limit);
-
-
     }
 
 }

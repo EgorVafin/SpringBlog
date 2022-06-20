@@ -5,7 +5,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     show-sql: 'true'
   thymeleaf:
     cache: 'false'
@@ -16,7 +16,7 @@ spring:
       table-name: SPRING_SESSION
     store-type: jdbc
   datasource:
-    password: '5AaKk2+S'
+    password: 'root'
     username: root
     url: jdbc:mysql://localhost:3306/spring_blog?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Moscow
   flyway:

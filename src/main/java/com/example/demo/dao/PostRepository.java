@@ -8,7 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public interface PostRepository extends PagingAndSortingRepository<Post, Integer> {
 
@@ -22,8 +21,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
             "JOIN users u ON p.user_id = u.id " +
             "WHERE p.is_active = 1 AND p.moderation_status = 'ACCEPTED' AND p.time <= NOW() ";
 
-    @Query(value = BASE_QUERY +
-            "ORDER BY :orderField :orderDirection", nativeQuery = true)
+    @Query(value = BASE_QUERY + "ORDER BY :orderField :orderDirection", nativeQuery = true)
     public Page<PostProjection> allPosts(Pageable pageable, @Param("orderField") String orderField, @Param("orderDirection") String orderDirection);
 
     @Query(value = BASE_QUERY + "AND p.text LIKE :query " +
