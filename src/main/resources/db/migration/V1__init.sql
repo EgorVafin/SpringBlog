@@ -17,16 +17,16 @@ alter table posts add constraint FK5lidm6cqbc7u4xhqpxm898qme foreign key (user_i
 alter table tag2post add constraint FKpjoedhh4h917xf25el3odq20i foreign key (post_id) references posts (id);
 alter table tag2post add constraint FKjou6suf2w810t2u3l96uasw3r foreign key (tag_id) references tags (id);
 
-INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (1, 'mymail@mail.com', '1', 'Anton', '123', '2000-10-10 00:00:00');
-INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (2, 'mymail1@mail.com', '0', 'Ivan', '1234', '2005-10-10 00:00:00');
-INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (3, 'mymail2@mail.com', '0', 'Petr', '1235', '2010-10-10 00:00:00');
-INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (4, 'mymail3@mail.com', '0', 'Masha', '1236', '2015-10-10 00:00:00');
+INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (1, 'mymail@mail.com', '1', 'Anton', '123', '2000-10-10 10:00:00');
+INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (2, 'mail1@mail.com', '0', 'Ivan', '1234', '2005-10-04 07:00:00');
+INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (3, 'mail2@mail.ru', '0', 'Petr', 'pass1235', '2010-05-10 12:00:00');
+INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time`) VALUES (4, 'mail3@gmail.com', '0', 'Masha', '1236', '2015-10-10 17:00:00');
 
-INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (1, 1, 'ACCEPTED', 'Moscow ', '2001-05-05 10:00:00','Moscow', 44, 1, 1);
-INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (2, 1, 'ACCEPTED', 'Dubai ', '2001-05-05 10:00:00','Dubai', 55, 1, 1);
-INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (3, 1, 'ACCEPTED', 'London ', '2001-05-05 10:00:00','London', 33, 1, 1);
-INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (4, 1, 'ACCEPTED', 'Istambul ', '2001-05-05 10:00:00','Istambul', 22, 1, 1);
-INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (5, 1, 'ACCEPTED', 'New-York', '2001-05-05 10:00:00','New-York', 100, 1, 1);
+INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (1, 1, 'ACCEPTED', 'Moscow is the biggest city in Russia', '2001-05-05 10:00:00','Moscow', 44, 1, 1);
+INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (2, 1, 'ACCEPTED', 'Dubai very nice place for travel at february', '2001-05-05 10:00:00','Dubai', 55, 1, 1);
+INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (3, 1, 'ACCEPTED', 'London is the capital of Great Britain', '2001-05-05 10:00:00','London', 33, 1, 1);
+INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (4, 1, 'ACCEPTED', 'Istambul is the city on two sea', '2001-05-05 10:00:00','Istambul', 22, 1, 1);
+INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (5, 1, 'ACCEPTED', 'Manhattan is the heart of New-York ', '2001-05-05 10:00:00','New-York', 100, 1, 1);
 
 INSERT INTO `tags` (`id`, `name`) VALUES (1, 'Moscow');
 INSERT INTO `tags` (`id`, `name`) VALUES (2, 'Dubai');
@@ -40,7 +40,7 @@ INSERT INTO `tag2post` (`post_id`, `tag_id`) VALUES (3, 3);
 INSERT INTO `tag2post` (`post_id`, `tag_id`) VALUES (4, 4);
 INSERT INTO `tag2post` (`post_id`, `tag_id`) VALUES (5, 5);
 
-INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Super post', '2010-05-05 10:10:10', null, 1, 1);
-INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Super post', '2010-05-05 10:10:10', null, 2, 1);
-INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Super post', '2010-05-05 10:10:10', null, 2, 1);
-INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Super post', '2010-05-05 10:10:10', null, 5, 1);
+INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Super post about Moscow', '2010-05-05 10:10:10', null, 1, 1);
+INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Travel to Dubai', '2010-05-05 10:10:10', null, 2, 1);
+INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('Very interest post', '2010-05-05 10:10:10', null, 2, 1);
+INSERT INTO `post_comments` (`text`, `time`, `parent_id`, `post_id`, `user_id`) VALUES ('New-York', '2010-05-05 10:10:10', null, 5, 1);
