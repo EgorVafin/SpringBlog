@@ -1,11 +1,11 @@
-package com.example.demo.api.response.post;
+package com.example.demo.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PostUserResponse {
+public class UserNameResponse {
 
     private int id;
     private String name;

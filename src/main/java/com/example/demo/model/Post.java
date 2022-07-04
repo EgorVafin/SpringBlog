@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Entity
@@ -46,5 +47,11 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<PostComment> comments;
+
+    @OneToMany(mappedBy = "post")
+    private List<TagToPost> tags;
 
 }

@@ -1,14 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.api.response.post.PostResponse;
-import com.example.demo.api.response.post.PostUserResponse;
+import com.example.demo.api.response.UserNameResponse;
 import com.example.demo.api.response.post.RootPostResponse;
 import com.example.demo.dao.PostProjection;
 import org.jsoup.Jsoup;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +19,7 @@ public class PostProjectionConverter {
         List<PostResponse> postList = posts.stream().map(post -> new PostResponse()
                         .id(post.getId())
                         .timestamp(post.getPostTimestamp())
-                        .user(new PostUserResponse(post.getUserId(), post.getUserName()))
+                        .user(new UserNameResponse(post.getUserId(), post.getUserName()))
                         .title(post.getTitle())
                         .announce(processAnnounce(post.getText()))
                         .likeCount(post.getLikesCount())

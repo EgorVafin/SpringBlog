@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.api.response.post.RootPostResponse;
+import com.example.demo.api.response.post.postDetail.PostDetailResponse;
+import com.example.demo.service.PostDetailService;
 import com.example.demo.service.PostResponseProcessor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +16,7 @@ public class ApiPostController {
     }
 
     private final PostResponseProcessor responseProcessor;
+    private final PostDetailService postDetailService;
 
     @RequestMapping("/api/post")
     @ResponseBody
@@ -55,5 +55,18 @@ public class ApiPostController {
 
         return responseProcessor.searchByTag(tag, limit, offset);
     }
+
+    @RequestMapping("/api/post/{id}")
+    @ResponseBody
+    public PostDetailResponse apiPostById(@PathVariable(value="id") int id) {
+
+        System.out.println(id);
+
+        postDetailService.postById(id);
+
+            return null;
+    }
+
+
 
 }

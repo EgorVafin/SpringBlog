@@ -25,13 +25,13 @@ INSERT INTO `users` (`id`,`email`, `is_moderator`, `name`, `password`, `reg_time
 INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (1, 1, 'ACCEPTED', 'Moscow is the biggest city in Russia', '2001-05-05 10:00:00','Moscow', 44, 1, 1);
 INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (2, 1, 'ACCEPTED', 'Dubai very nice place for travel at february', '2001-05-05 10:00:00','Dubai', 55, 1, 1);
 INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (3, 1, 'ACCEPTED', 'London is the capital of Great Britain', '2001-05-05 10:00:00','London', 33, 1, 1);
-INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (4, 1, 'ACCEPTED', 'Istambul is the city on two sea', '2001-05-05 10:00:00','Istambul', 22, 1, 1);
+INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (4, 1, 'ACCEPTED', 'Istanbul is the city on two sea', '2001-05-05 10:00:00','Istanbul', 22, 1, 1);
 INSERT INTO `posts` (`id`, `is_active`, `moderation_status`, `text`, `time`, `title`, `view_count`, `moderator_id`, `user_id`) VALUES (5, 1, 'ACCEPTED', 'Manhattan is the heart of New-York ', '2001-05-05 10:00:00','New-York', 100, 1, 1);
 
 INSERT INTO `tags` (`id`, `name`) VALUES (1, 'Moscow');
 INSERT INTO `tags` (`id`, `name`) VALUES (2, 'Dubai');
 INSERT INTO `tags` (`id`, `name`) VALUES (3, 'London');
-INSERT INTO `tags` (`id`, `name`) VALUES (4, 'Istambul');
+INSERT INTO `tags` (`id`, `name`) VALUES (4, 'Istanbul');
 INSERT INTO `tags` (`id`, `name`) VALUES (5, 'New-York');
 
 INSERT INTO `tag2post` (`post_id`, `tag_id`) VALUES (1, 1);
