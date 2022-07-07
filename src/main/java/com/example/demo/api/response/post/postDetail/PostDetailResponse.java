@@ -1,12 +1,17 @@
 package com.example.demo.api.response.post.postDetail;
 
 import com.example.demo.api.response.UserNameResponse;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.util.List;
 
 @Accessors(fluent = true)
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class PostDetailResponse {
 
     private int id;

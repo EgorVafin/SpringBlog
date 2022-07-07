@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.api.response.SettingsResponse;
 import com.example.demo.api.response.post.RootPostResponse;
 import com.example.demo.api.response.post.postDetail.PostDetailResponse;
 import com.example.demo.service.PostDetailService;
 import com.example.demo.service.PostResponseProcessor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,8 +42,8 @@ public class ApiPostController {
     @RequestMapping("/api/post/byDate")
     @ResponseBody
     public RootPostResponse apiPostSearchByDate(@RequestParam(value = "date", required = false, defaultValue = "") String date,
-                                                      @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
-                                                      @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
+                                                @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+                                                @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
     ) {
 
         return responseProcessor.searchByDate(date, limit, offset);
@@ -49,8 +52,8 @@ public class ApiPostController {
     @RequestMapping("/api/post/byTag")
     @ResponseBody
     public RootPostResponse apiPostSearchByTag(@RequestParam(value = "tag", required = false, defaultValue = "") String tag,
-                                                @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
-                                                @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
+                                               @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+                                               @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
     ) {
 
         return responseProcessor.searchByTag(tag, limit, offset);
@@ -58,15 +61,24 @@ public class ApiPostController {
 
     @RequestMapping("/api/post/{id}")
     @ResponseBody
-    public PostDetailResponse apiPostById(@PathVariable(value="id") int id) {
+    public ResponseEntity<PostDetailResponse> apiPostById(@PathVariable(value = "id") int id) {
 
-        System.out.println(id);
+        PostDetailResponse response = postDetailService.postById(id);
 
-        postDetailService.postById(id);
+        if (response == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } else {
 
-            return null;
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
+
+//        @GetMapping("/settings")
+//        public ResponseEntity<SettingsResponse> apiGeneralSettings() {
+//
+//            return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
+
     }
-
-
 
 }

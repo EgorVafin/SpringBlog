@@ -16,7 +16,7 @@ spring:
       table-name: SPRING_SESSION
     store-type: jdbc
   datasource:
-    password: '5AaKk2+S'
+    password: 'root'
     username: root
     url: jdbc:mysql://localhost:3306/spring_blog?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Moscow
   flyway:

@@ -46,5 +46,4 @@ public class SettingsService {
 
         return false;
     }
-
 }
