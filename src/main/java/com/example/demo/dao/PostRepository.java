@@ -38,8 +38,10 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
     public Page<PostProjection> postsByTag(Pageable pageable, @Param("tag") String tag);
 
     @Query(value = "SELECT (SELECT count(*) FROM spring_blog.post_votes where post_id = 2 AND `value` = 1) AS likeCount, " +
-                    "(SELECT count(*) FROM spring_blog.post_votes where post_id = 2 AND `value` = -1) AS dislikeCount; ", nativeQuery = true)
+                    "(SELECT count(*) FROM spring_blog.post_votes where post_id = 2 AND `value` = -1) AS dislikeCount ; ", nativeQuery = true)
     public PostLikesDislikesCount postLikeDislikeCount(@Param("id") Integer id);
+
+//    "WHERE p.is_active = 1 AND p.moderation_status = 'ACCEPTED' AND p.time <= NOW() ";
 
 }
 

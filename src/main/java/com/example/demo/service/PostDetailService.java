@@ -29,6 +29,11 @@ public class PostDetailService {
 
         Post post = postOptional.get();
 
+        if (!post.canDisplay()) {
+
+            return null;
+        }
+
         PostLikesDislikesCount likeDislikeCount = repository.postLikeDislikeCount(id);
 
         PostDetailResponse response = new PostDetailResponse();
@@ -44,9 +49,8 @@ public class PostDetailService {
                 .comments(convertComments(post))
                 .tags(post.getTags().stream().map(tagToPost -> tagToPost.getTag().getName()).collect(Collectors.toList()));
 
-
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         post.setViewCount(post.getViewCount() + 1);
+        repository.save(post);
 
         return response;
     }

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.api.response.AuthCheckResponse;
+import com.example.demo.api.response.CaptchaResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,4 +18,13 @@ public class ApiAuthController {
 
         return authCheckResponse;
     }
+
+    @RequestMapping("/api/auth/captcha")
+    @ResponseBody
+    public CaptchaResponse captchaResponse() {
+
+
+        return null;
+    }
+
 }

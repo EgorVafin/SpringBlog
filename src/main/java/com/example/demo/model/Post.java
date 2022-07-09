@@ -54,4 +54,9 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<TagToPost> tags;
 
+    public boolean canDisplay() {
+
+        return (isActive == true && moderationStatus == Status.ACCEPTED && time.getTime() <= System.currentTimeMillis());
+    }
+
 }

@@ -69,16 +69,8 @@ public class ApiPostController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         } else {
 
-
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
-
-
-//        @GetMapping("/settings")
-//        public ResponseEntity<SettingsResponse> apiGeneralSettings() {
-//
-//            return new ResponseEntity<>(settingsService.getGlobalSettings(), HttpStatus.OK);
-
     }
 
 }
