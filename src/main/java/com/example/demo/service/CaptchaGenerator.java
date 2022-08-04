@@ -1,7 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.api.response.CaptchaResponse;
+import com.example.demo.dao.CaptchaRepository;
+import com.example.demo.model.CaptchaCode;
 import com.github.cage.GCage;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -11,13 +16,17 @@ import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.sql.Timestamp;
 import java.util.Base64;
 
 @Service
+@RequiredArgsConstructor
 public class CaptchaGenerator {
 
-    public CaptchaResponse createCaptcha() {
+    private final CaptchaRepository captchaRepository;
+    private final CaptchaConfig captchaConfig;
 
+    public CaptchaResponse createCaptcha() {
 
         GCage gCage = new GCage();
 
@@ -25,27 +34,23 @@ public class CaptchaGenerator {
         String secretCode = gCage.getTokenGenerator().next() + gCage.getTokenGenerator().next() + gCage.getTokenGenerator().next();
 
         BufferedImage image = gCage.drawImage(captchaText);
-
         BufferedImage resImage = resize(image, 100, 35);
-
         byte[] newImage = imgToBase64String(resImage, "png");
-
         String encodedString = Base64.getEncoder().encodeToString(newImage);
+
+        CaptchaCode captchaCode = new CaptchaCode();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        captchaCode.setTime(timestamp);
+        captchaCode.setCode(captchaText);
+        captchaCode.setSecretCode(secretCode);
+        captchaRepository.save(captchaCode);
+
+        captchaRepository.deleteByLifeTime(captchaConfig.getLifeTime());
 
         return new CaptchaResponse(secretCode, "data:image/png;base64, " + encodedString);
 
-
-
-//
-//        // 1) Создать рисунок в виде base64 строки
-//        2) Cгенерировать секретный код (случайная строка 20 символов буквы и цифры)
-//        3) Очистить старые записи в базе
-//                4) Вернуть капча сложно
-
-
-        return null;
     }
-
 
     public byte[] imgToBase64String(final RenderedImage img, final String formatName) {
         final ByteArrayOutputStream os = new ByteArrayOutputStream();

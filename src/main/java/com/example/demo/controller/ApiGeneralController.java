@@ -25,7 +25,6 @@ public class ApiGeneralController {
 
     @GetMapping("/init")
     @ResponseBody
-//    public InitResponse apiGeneralInit(@RequestBody InitResponse initResponse)
     public InitResponse apiGeneralInit() {
 
         System.out.println(initResponse.getTitle());

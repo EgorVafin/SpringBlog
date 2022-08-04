@@ -1,24 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.api.request.UserRegistrationRequest;
 import com.example.demo.api.response.AuthCheckResponse;
 import com.example.demo.api.response.CaptchaResponse;
+import com.example.demo.api.response.UserRegistrationResponse;
+import com.example.demo.service.CaptchaGenerator;
 import com.github.cage.GCage;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.Base64;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class ApiAuthController {
+
+    private final CaptchaGenerator captchaGenerator;
 
     @RequestMapping("/check")
     @ResponseBody
@@ -33,43 +29,17 @@ public class ApiAuthController {
     @ResponseBody
     public CaptchaResponse captchaResponse() {
 
-        GCage gCage = new GCage();
-
-        String captchaText = gCage.getTokenGenerator().next();
-        String secretCode = gCage.getTokenGenerator().next() + gCage.getTokenGenerator().next() + gCage.getTokenGenerator().next();
-
-        BufferedImage image = gCage.drawImage(captchaText);
-
-        BufferedImage resImage = resize(image, 100, 35);
-
-        byte[] newImage = imgToBase64String(resImage, "png");
-
-        String encodedString = Base64.getEncoder().encodeToString(newImage);
-
-        return new CaptchaResponse("1234", "data:image/png;base64, " + encodedString);
+        return captchaGenerator.createCaptcha();
     }
 
-    public static byte[] imgToBase64String(final RenderedImage img, final String formatName) {
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+    @PostMapping("/register")
+    @ResponseBody
+    public UserRegistrationResponse register(@RequestBody UserRegistrationRequest request) {
 
-        try {
-            ImageIO.write(img, formatName, os);
-            os.close();
-            return os.toByteArray();
-        } catch (final IOException ioe) {
-            throw new UncheckedIOException(ioe);
-        }
+        UserRegistrationResponse userRegistrationResponse = new UserRegistrationResponse();
+        userRegistrationResponse.setResult(true);
+
+        return userRegistrationResponse;
+
     }
-
-    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
-        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D g2d = dimg.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-
-        return dimg;
-    }
-
 }

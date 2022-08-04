@@ -28,5 +28,4 @@ public class CaptchaCode {
     @Column(name = "secret_code", columnDefinition = "TINYTEXT NOT NULL")
     private String secretCode;
 
-
 }
