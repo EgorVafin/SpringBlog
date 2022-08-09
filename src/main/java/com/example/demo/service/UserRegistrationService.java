@@ -2,11 +2,15 @@ package com.example.demo.service;
 
 import com.example.demo.api.request.UserRegistrationRequest;
 import com.example.demo.api.response.UserRegistrationResponse;
+import com.example.demo.dao.CaptchaRepository;
 import com.example.demo.dao.UserRepository;
+import com.example.demo.model.CaptchaCode;
 import com.example.demo.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -16,47 +20,69 @@ import java.util.Optional;
 public class UserRegistrationService {
 
     private final UserRepository userRepository;
+    private final CaptchaRepository captchaRepository;
+    private final PasswordEncoder passwordEncoder;
 
-public UserRegistrationResponse register(UserRegistrationRequest request) {
+    public UserRegistrationResponse register(UserRegistrationRequest request) {
 
-    Map<String, String> errors = validate(request);
-    if(!errors.isEmpty()) {
+        Map<String, String> errors = validate(request);
+        if (!errors.isEmpty()) {
 
-        UserRegistrationResponse response = new UserRegistrationResponse();
-        response.setResult(false);
-        response.setErrors(errors);
+            UserRegistrationResponse response = new UserRegistrationResponse();
+            response.setResult(false);
+            response.setErrors(errors);
 
-        return response;
-    } else {
+            return response;
+        } else {
+            registerUser(request);
+            UserRegistrationResponse response = new UserRegistrationResponse();
+            response.setResult(true);
 
-        registerUser(request);
-        UserRegistrationResponse response = new UserRegistrationResponse();
-        response.setResult(true);
+            registerUser(request);
 
-        return response;
+            return response;
+        }
     }
-
-}
 
     private void registerUser(UserRegistrationRequest request) {
 
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getE_mail());
+        user.setRegTime(new Timestamp(System.currentTimeMillis()));
 
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
+        userRepository.save(user);
     }
 
     private Map<String, String> validate(UserRegistrationRequest request) {
 
-    Map<String,String> errors = new HashMap<>();
+        Map<String, String> errors = new HashMap<>();
 
         Optional<User> user = userRepository.findOneByEmail(request.getE_mail());
+        if (user.isPresent()) {
+            errors.put("email", "Этот e-mail уже зарегистрирован");
+        }
 
-if(user.isPresent()) {
+        if (request.getName().trim().isEmpty()) {
+            errors.put("name", "Имя указано неверно");
+        }
 
-    errors.put("email", "Этот e-mail уже зарегистрирован");
-}
+        if (request.getPassword().length() < 6) {
+            errors.put("password", "Пароль короче 6-ти символов");
+        }
 
+        Optional<CaptchaCode> captchaFromDb = captchaRepository.findBySecretCode(request.getCaptcha_secret());
+
+        if (!captchaFromDb.isPresent()) {
+            errors.put("captcha", "Код с картинки введён неверно");
+        } else {
+            if (!request.getCaptcha().equals(captchaFromDb.get().getCode())) {
+                errors.put("captcha", "Код с картинки введён неверно");
+            }
+        }
 
         return errors;
     }
-
 }

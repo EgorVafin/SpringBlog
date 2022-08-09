@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface CaptchaRepository extends JpaRepository<CaptchaCode, Integer> {
 
@@ -15,4 +17,6 @@ public interface CaptchaRepository extends JpaRepository<CaptchaCode, Integer> {
     @Transactional
     @Query(value = "DELETE FROM captcha_codes WHERE time < DATE_SUB(NOW(), interval :lifeTime second);", nativeQuery = true)
     public void deleteByLifeTime(@Param("lifeTime") Integer lifeTime);
+
+    public Optional<CaptchaCode> findBySecretCode(String secretCode);
 }

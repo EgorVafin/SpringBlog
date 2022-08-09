@@ -5,6 +5,7 @@ import com.example.demo.api.response.AuthCheckResponse;
 import com.example.demo.api.response.CaptchaResponse;
 import com.example.demo.api.response.UserRegistrationResponse;
 import com.example.demo.service.CaptchaGenerator;
+import com.example.demo.service.UserRegistrationService;
 import com.github.cage.GCage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ApiAuthController {
 
     private final CaptchaGenerator captchaGenerator;
+    private final UserRegistrationService userRegistrationService;
 
     @RequestMapping("/check")
     @ResponseBody
@@ -36,10 +38,6 @@ public class ApiAuthController {
     @ResponseBody
     public UserRegistrationResponse register(@RequestBody UserRegistrationRequest request) {
 
-        UserRegistrationResponse userRegistrationResponse = new UserRegistrationResponse();
-        userRegistrationResponse.setResult(true);
-
-        return userRegistrationResponse;
-
+        return userRegistrationService.register(request);
     }
 }
