@@ -10,11 +10,11 @@ spring:
   thymeleaf:
     cache: 'false'
   session:
+    store-type: jdbc
     jdbc:
       flush-mode: on_save
       initialize-schema: always
       table-name: SPRING_SESSION
-    store-type: jdbc
   datasource:
     password: '5AaKk2+S'
     username: root
@@ -41,4 +41,7 @@ blog:
 
 captcha:
   lifeTime: 3600
+
+
+
 

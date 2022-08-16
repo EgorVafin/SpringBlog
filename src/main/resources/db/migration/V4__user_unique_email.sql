@@ -1,0 +1,1 @@
+create unique index users_email_unique on users (email);
