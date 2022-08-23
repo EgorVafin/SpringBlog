@@ -3,11 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.api.response.SettingsResponse;
 import com.example.demo.api.response.post.RootPostResponse;
 import com.example.demo.api.response.post.postDetail.PostDetailResponse;
+import com.example.demo.model.User;
+import com.example.demo.service.MyPostsService;
 import com.example.demo.service.PostDetailService;
 import com.example.demo.service.PostResponseProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +22,13 @@ public class ApiPostController {
         recent, popular, best, early
     }
 
+    public enum ModerationStatus {
+        inactive, pending, declined, published
+    }
+
     private final PostResponseProcessor responseProcessor;
     private final PostDetailService postDetailService;
+    private final MyPostsService myPostsService;
 
     @RequestMapping("/api/post")
     @ResponseBody
@@ -71,6 +80,20 @@ public class ApiPostController {
 
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
+    }
+
+    @RequestMapping("/api/post/my")
+    @ResponseBody
+    public RootPostResponse myPosts(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                        @RequestParam(value = "limit", defaultValue = "0") int limit,
+                        @RequestParam(value = "status", required = true) ModerationStatus status) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+
+        return myPostsService.getMyPosts(offset, limit, status, user);
+
+
     }
 
 }

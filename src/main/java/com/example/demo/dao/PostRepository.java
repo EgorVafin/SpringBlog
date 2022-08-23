@@ -1,6 +1,8 @@
 package com.example.demo.dao;
 
+import com.example.demo.controller.ApiPostController;
 import com.example.demo.model.Post;
+import com.example.demo.model.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -38,13 +40,19 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
     public Page<PostProjection> postsByTag(Pageable pageable, @Param("tag") String tag);
 
     @Query(value = "SELECT (SELECT count(*) FROM spring_blog.post_votes where post_id = :id AND `value` = 1) AS likeCount, " +
-                    "(SELECT count(*) FROM spring_blog.post_votes where post_id = :id AND `value` = -1) AS dislikeCount ; ", nativeQuery = true)
+            "(SELECT count(*) FROM spring_blog.post_votes where post_id = :id AND `value` = -1) AS dislikeCount ; ", nativeQuery = true)
     public PostLikesDislikesCount postLikeDislikeCount(@Param("id") Integer id);
 
-//    "WHERE p.is_active = 1 AND p.moderation_status = 'ACCEPTED' AND p.time <= NOW() ";
-
     @Query(value = "select count(*) from posts where moderation_status = 'NEW' AND moderator_id = :moderatorId", nativeQuery = true)
-    public int findPostCountForModeration(@Param ("moderatorId") int moderatorId);
+    public int findPostCountForModeration(@Param("moderatorId") int moderatorId);
+
+    @Query(value = BASE_QUERY + "AND p.is_active = false AND p.user_id = :userId", nativeQuery = true)
+    public Page<PostProjection> userInactivePosts(Pageable pageable, @Param("userId") int userId);
+
+    @Query(value = BASE_QUERY + "AND p.is_active = true AND p.user_id = :userId AND p.moderation_status = :moderationStatus", nativeQuery = true)
+    public Page<PostProjection> userActivePostsWithStatus(Pageable pageable,
+                                                          @Param("userId") int userId,
+                                                          @Param("moderationStatus") Status moderationStatus);
 
 }
 
