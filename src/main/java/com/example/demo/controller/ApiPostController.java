@@ -91,7 +91,7 @@ public class ApiPostController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
 
-        return myPostsService.getMyPosts(offset, limit, status, user);
+        return myPostsService.getMyPosts(limit, offset, status, user);
 
 
     }

@@ -84,5 +84,6 @@ public class ApiAuthController {
         userLogoutResponse.setResult(true);
 
         return userLogoutResponse;
+
     }
 }
