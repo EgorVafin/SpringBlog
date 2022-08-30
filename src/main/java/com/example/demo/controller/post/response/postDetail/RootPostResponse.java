@@ -1,5 +1,6 @@
-package com.example.demo.api.response.post;
+package com.example.demo.controller.post.response.postDetail;
 
+import com.example.demo.controller.post.response.PostResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

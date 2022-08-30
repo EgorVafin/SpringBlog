@@ -1,4 +1,4 @@
-package com.example.demo.api.response.user.login;
+package com.example.demo.controller.auth.response;
 
 import lombok.Data;
 

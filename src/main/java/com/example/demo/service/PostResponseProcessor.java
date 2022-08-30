@@ -1,19 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.api.response.post.*;
-import com.example.demo.controller.ApiPostController;
+import com.example.demo.controller.post.ApiPostController;
+import com.example.demo.controller.post.response.postDetail.RootPostResponse;
 import com.example.demo.dao.PostProjection;
 import com.example.demo.dao.PostRepository;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.Jsoup;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service

@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.api.response.UserNameResponse;
-import com.example.demo.api.response.post.postDetail.PostCommentResponse;
-import com.example.demo.api.response.post.postDetail.PostDetailResponse;
-import com.example.demo.api.response.post.postDetail.UserNamePhotoResponse;
+import com.example.demo.controller.post.response.PostCommentResponse;
+import com.example.demo.controller.post.response.postDetail.PostDetailResponse;
+import com.example.demo.controller.post.response.UserNamePhotoResponse;
 import com.example.demo.dao.PostLikesDislikesCount;
 import com.example.demo.dao.PostRepository;
 import com.example.demo.model.Post;

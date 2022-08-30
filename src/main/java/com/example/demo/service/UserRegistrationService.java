@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.api.request.UserRegistrationRequest;
-import com.example.demo.api.response.UserRegistrationResponse;
+import com.example.demo.controller.auth.request.UserRegistrationRequest;
+import com.example.demo.api.response.ResultErrorsResponse;
 import com.example.demo.dao.CaptchaRepository;
 import com.example.demo.dao.UserRepository;
 import com.example.demo.model.CaptchaCode;
@@ -23,19 +23,19 @@ public class UserRegistrationService {
     private final CaptchaRepository captchaRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserRegistrationResponse register(UserRegistrationRequest request) {
+    public ResultErrorsResponse register(UserRegistrationRequest request) {
 
         Map<String, String> errors = validate(request);
         if (!errors.isEmpty()) {
 
-            UserRegistrationResponse response = new UserRegistrationResponse();
+            ResultErrorsResponse response = new ResultErrorsResponse();
             response.setResult(false);
             response.setErrors(errors);
 
             return response;
         } else {
             registerUser(request);
-            UserRegistrationResponse response = new UserRegistrationResponse();
+            ResultErrorsResponse response = new ResultErrorsResponse();
             response.setResult(true);
 
             registerUser(request);

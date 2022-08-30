@@ -1,4 +1,4 @@
-package com.example.demo.api.request;
+package com.example.demo.controller.auth.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

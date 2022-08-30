@@ -1,6 +1,5 @@
 package com.example.demo.dao;
 
-import com.example.demo.controller.ApiPostController;
 import com.example.demo.model.Post;
 import com.example.demo.model.Status;
 import org.springframework.data.domain.Page;
@@ -55,19 +54,12 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
             nativeQuery = true)
     public Page<PostProjection> userInactivePosts(Pageable pageable, @Param("userId") int userId);
 
-    @Query(value = BASE_QUERY + "WHERE p.is_active = true AND p.user_id = :userId AND p.moderation_status = :moderationStatus",
-            countQuery = BASE_COUNT_QUERY + "WHERE p.is_active = true AND p.user_id = :userId AND p.moderation_status = :moderationStatus",
+    @Query(value = BASE_QUERY + "WHERE p.is_active = true AND p.user_id = :userId AND p.moderation_status = :#{#moderationStatus.name()}",
+            countQuery = BASE_COUNT_QUERY + "WHERE p.is_active = true AND p.user_id = :userId AND p.moderation_status = :#{#moderationStatus.name()}",
             nativeQuery = true)
     public Page<PostProjection> userActivePostsWithStatus(Pageable pageable,
                                                           @Param("userId") int userId,
                                                           @Param("moderationStatus") Status moderationStatus);
-
-    @Query(value = BASE_QUERY + "WHERE p.is_active = true AND p.user_id = :userId AND p.moderation_status = :moderationStatus",
-            countQuery = BASE_COUNT_QUERY + "WHERE p.is_active = true AND p.user_id = :userId AND p.moderation_status = :moderationStatus",
-            nativeQuery = true)
-    public Page<PostProjection> userActivePostsWithStatusString(Pageable pageable,
-                                                                @Param("userId") int userId,
-                                                                @Param("moderationStatus") String moderationStatus);
 
 }
 

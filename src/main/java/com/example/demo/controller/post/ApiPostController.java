@@ -1,8 +1,9 @@
-package com.example.demo.controller;
+package com.example.demo.controller.post;
 
-import com.example.demo.api.response.SettingsResponse;
-import com.example.demo.api.response.post.RootPostResponse;
-import com.example.demo.api.response.post.postDetail.PostDetailResponse;
+import com.example.demo.api.response.ResultErrorsResponse;
+import com.example.demo.controller.post.request.CreatePostRequest;
+import com.example.demo.controller.post.response.postDetail.RootPostResponse;
+import com.example.demo.controller.post.response.postDetail.PostDetailResponse;
 import com.example.demo.model.User;
 import com.example.demo.service.MyPostsService;
 import com.example.demo.service.PostDetailService;
@@ -12,10 +13,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Min;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class ApiPostController {
 
     public enum Mode {
@@ -84,16 +89,22 @@ public class ApiPostController {
 
     @RequestMapping("/api/post/my")
     @ResponseBody
-    public RootPostResponse myPosts(@RequestParam(value = "offset", defaultValue = "0") int offset,
-                        @RequestParam(value = "limit", defaultValue = "0") int limit,
+    public RootPostResponse myPosts(@RequestParam(value = "offset", defaultValue = "0") @Min(0) int offset,
+                        @RequestParam(value = "limit", defaultValue = "0") @Min(1) int limit,
                         @RequestParam(value = "status", required = true) ModerationStatus status) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
 
         return myPostsService.getMyPosts(limit, offset, status, user);
+    }
 
 
+    @PostMapping("/api/post")
+    @ResponseBody
+    public ResultErrorsResponse createPost(@RequestBody CreatePostRequest request) {
+
+        return null;
     }
 
 }

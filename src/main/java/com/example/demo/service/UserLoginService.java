@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.api.request.UserLoginRequest;
-import com.example.demo.api.response.user.login.UserLoginResponse;
-import com.example.demo.api.response.user.login.UserLoginUserInfo;
+import com.example.demo.controller.auth.request.UserLoginRequest;
+import com.example.demo.controller.auth.response.UserLoginResponse;
+import com.example.demo.controller.auth.response.UserLoginUserInfo;
 import com.example.demo.dao.PostRepository;
 import com.example.demo.dao.UserRepository;
 import com.example.demo.model.User;

@@ -1,4 +1,4 @@
-package com.example.demo.api.response.post.postDetail;
+package com.example.demo.controller.post.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

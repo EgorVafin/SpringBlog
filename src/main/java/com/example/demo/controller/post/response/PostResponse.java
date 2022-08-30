@@ -1,4 +1,4 @@
-package com.example.demo.api.response.post.postDetail;
+package com.example.demo.controller.post.response;
 
 import com.example.demo.api.response.UserNameResponse;
 import lombok.Getter;
@@ -6,25 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Accessors(fluent = true)
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostDetailResponse {
+
+public class PostResponse {
 
     private int id;
     private long timestamp;
-    private boolean active;
     private UserNameResponse user;
     private String title;
-    private String text;
+    private String announce;
     private int likeCount;
     private int dislikeCount;
+    private int commentCount;
     private int viewCount;
-    private List<PostCommentResponse> comments;
-    private List<String> tags;
 
     public int getId() {
         return id;
@@ -32,10 +29,6 @@ public class PostDetailResponse {
 
     public long getTimestamp() {
         return timestamp;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public UserNameResponse getUser() {
@@ -46,8 +39,8 @@ public class PostDetailResponse {
         return title;
     }
 
-    public String getText() {
-        return text;
+    public String getAnnounce() {
+        return announce;
     }
 
     public int getLikeCount() {
@@ -58,15 +51,11 @@ public class PostDetailResponse {
         return dislikeCount;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
     public int getViewCount() {
         return viewCount;
-    }
-
-    public List<PostCommentResponse> getComments() {
-        return comments;
-    }
-
-    public List<String> getTags() {
-        return tags;
     }
 }

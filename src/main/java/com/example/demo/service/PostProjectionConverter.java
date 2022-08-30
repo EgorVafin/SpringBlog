@@ -1,8 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.api.response.post.PostResponse;
+import com.example.demo.controller.post.response.PostResponse;
 import com.example.demo.api.response.UserNameResponse;
-import com.example.demo.api.response.post.RootPostResponse;
+import com.example.demo.controller.post.response.postDetail.RootPostResponse;
 import com.example.demo.dao.PostProjection;
 import org.jsoup.Jsoup;
 import org.springframework.data.domain.Page;
