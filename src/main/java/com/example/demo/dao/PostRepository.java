@@ -36,7 +36,6 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
             "ORDER BY p.time ASC", nativeQuery = true)
     public Page<PostProjection> postsByDate(Pageable pageable, @Param("date") String date);
 
-    //TODO check query
     @Query(value = BASE_QUERY + " WHERE " + BASE_FILTERS +
             "AND p.id IN (SELECT t2p.post_id FROM spring_blog.tag2post t2p " +
             "WHERE t2p.tag_id = (select t.id FROM spring_blog.tags t WHERE t.name = :tag)", nativeQuery = true)
@@ -60,6 +59,7 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
     public Page<PostProjection> userActivePostsWithStatus(Pageable pageable,
                                                           @Param("userId") int userId,
                                                           @Param("moderationStatus") Status moderationStatus);
+
 
 }
 

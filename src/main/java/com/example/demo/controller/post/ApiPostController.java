@@ -6,6 +6,7 @@ import com.example.demo.controller.post.response.postDetail.RootPostResponse;
 import com.example.demo.controller.post.response.postDetail.PostDetailResponse;
 import com.example.demo.model.User;
 import com.example.demo.service.MyPostsService;
+import com.example.demo.service.PostCreateService;
 import com.example.demo.service.PostDetailService;
 import com.example.demo.service.PostResponseProcessor;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class ApiPostController {
     private final PostResponseProcessor responseProcessor;
     private final PostDetailService postDetailService;
     private final MyPostsService myPostsService;
+    private final PostCreateService postCreateService;
 
     @RequestMapping("/api/post")
     @ResponseBody
@@ -104,7 +106,7 @@ public class ApiPostController {
     @ResponseBody
     public ResultErrorsResponse createPost(@RequestBody CreatePostRequest request) {
 
-        return null;
+        return postCreateService.createPost(request);
     }
 
 }

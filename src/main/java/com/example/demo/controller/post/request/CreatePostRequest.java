@@ -1,7 +1,14 @@
 package com.example.demo.controller.post.request;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class CreatePostRequest {
 
     private long timestamp;

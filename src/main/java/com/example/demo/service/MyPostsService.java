@@ -26,8 +26,6 @@ public class MyPostsService {
         int userId = user.getId();
         Page<PostProjection> posts = switch (moderationStatus) {
             case inactive -> postRepository.userInactivePosts(pageable, userId);
-
-            //TODO check 2
             case pending -> postRepository.userActivePostsWithStatus(pageable, userId, Status.NEW);
             case declined -> postRepository.userActivePostsWithStatus(pageable, userId, Status.DECLINED);
             case published -> postRepository.userActivePostsWithStatus(pageable, userId, Status.ACCEPTED);
@@ -36,7 +34,6 @@ public class MyPostsService {
         return postProjectionConverter.convert(posts);
     }
 
-    // !!!!! double code
     private Pageable createPageable(Integer limit, Integer offset) {
         int page = (int) Math.ceil((double) offset / limit);
         return PageRequest.of(page, limit);

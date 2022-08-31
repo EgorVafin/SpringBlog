@@ -4,9 +4,11 @@ import com.example.demo.model.Tag;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface TagRepository extends PagingAndSortingRepository<Tag, Integer> {
 
     @Query(value = "SELECT t.name, " +
@@ -16,4 +18,8 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, Integer> 
             "FROM spring_blog.tags t " +
             "WHERE t.name LIKE :searchPhrase", nativeQuery = true)
     public List<TagProjection> searchTags(@Param("searchPhrase") String searchPhrase);
+
+
+    @Query(value = "select * from tags t where t.name LIKE :name", nativeQuery = true)
+    public List<TagProjection> findByName(@Param("name") String name);
 }
