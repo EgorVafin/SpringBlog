@@ -106,7 +106,10 @@ public class ApiPostController {
     @ResponseBody
     public ResultErrorsResponse createPost(@RequestBody CreatePostRequest request) {
 
-        return postCreateService.createPost(request);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+
+        return postCreateService.createPost(request, user);
     }
 
     // @RequestMapping("/api/post/{id}")

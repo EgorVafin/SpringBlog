@@ -22,4 +22,6 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, Integer> 
 
     @Query(value = "select * from tags t where t.name LIKE :name", nativeQuery = true)
     public List<TagProjection> findByName(@Param("name") String name);
+
+    public List<Tag> findByNameIn(List<String> names);
 }
