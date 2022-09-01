@@ -47,6 +47,8 @@ public class PostCreateService {
                 post.setActive(false);
             }
             post.setModerationStatus(Status.NEW);
+
+            //TODO доделать изменение времени
             post.setTime(new Timestamp(request.getTimestamp()));
             post.setTitle(request.getTitle());
             post.setText(request.getText());

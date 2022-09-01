@@ -109,4 +109,11 @@ public class ApiPostController {
         return postCreateService.createPost(request);
     }
 
+    // @RequestMapping("/api/post/{id}")
+    @PutMapping("/api/post/{id}")
+    @ResponseBody
+    public void editPost(@RequestBody CreatePostRequest request, @PathVariable(value = "id") int id) {
+
+    }
+
 }
