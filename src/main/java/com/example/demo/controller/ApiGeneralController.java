@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
@@ -50,5 +51,12 @@ public class ApiGeneralController {
     public CalendarRootResponse apiGeneralCalendar(@RequestParam(value = "year", required = false, defaultValue = "") String year) {
 
         return calendarResponseProcessor.process(year);
+    }
+
+    @PostMapping("/image")
+    public String uploadImage(@RequestParam("image") MultipartFile file) {
+
+
+        return "";
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreatePostRequest {
+public class CreateUpdatePostRequest {
 
     private long timestamp;
     private short active;

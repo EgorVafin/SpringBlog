@@ -1,9 +1,11 @@
 package com.example.demo.controller.post;
 
 import com.example.demo.api.response.ResultErrorsResponse;
-import com.example.demo.controller.post.request.CreatePostRequest;
+import com.example.demo.controller.post.request.CreateUpdatePostRequest;
 import com.example.demo.controller.post.response.postDetail.RootPostResponse;
 import com.example.demo.controller.post.response.postDetail.PostDetailResponse;
+import com.example.demo.dao.PostRepository;
+import com.example.demo.model.Post;
 import com.example.demo.model.User;
 import com.example.demo.service.MyPostsService;
 import com.example.demo.service.PostCreateService;
@@ -18,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +39,7 @@ public class ApiPostController {
     private final PostDetailService postDetailService;
     private final MyPostsService myPostsService;
     private final PostCreateService postCreateService;
+    private final PostRepository postRepository;
 
     @RequestMapping("/api/post")
     @ResponseBody
@@ -92,8 +96,8 @@ public class ApiPostController {
     @RequestMapping("/api/post/my")
     @ResponseBody
     public RootPostResponse myPosts(@RequestParam(value = "offset", defaultValue = "0") @Min(0) int offset,
-                        @RequestParam(value = "limit", defaultValue = "0") @Min(1) int limit,
-                        @RequestParam(value = "status", required = true) ModerationStatus status) {
+                                    @RequestParam(value = "limit", defaultValue = "0") @Min(1) int limit,
+                                    @RequestParam(value = "status", required = true) ModerationStatus status) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
@@ -104,7 +108,7 @@ public class ApiPostController {
 
     @PostMapping("/api/post")
     @ResponseBody
-    public ResultErrorsResponse createPost(@RequestBody CreatePostRequest request) {
+    public ResultErrorsResponse createPost(@RequestBody CreateUpdatePostRequest request) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
@@ -112,11 +116,22 @@ public class ApiPostController {
         return postCreateService.createPost(request, user);
     }
 
-    // @RequestMapping("/api/post/{id}")
     @PutMapping("/api/post/{id}")
     @ResponseBody
-    public void editPost(@RequestBody CreatePostRequest request, @PathVariable(value = "id") int id) {
+    public ResponseEntity<ResultErrorsResponse> editPost(@RequestBody CreateUpdatePostRequest request,
+                                                         @PathVariable(value = "id") int id) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+
+        Optional<Post> post = postRepository.findById(id);
+        if (!post.isPresent()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        } else {
+            ResultErrorsResponse result = postCreateService.updatePost(post.get(), request, user);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+
+        }
     }
-
 }

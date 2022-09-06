@@ -3,6 +3,7 @@ package com.example.demo.api.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +25,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/post/my**").authenticated()
+                .antMatchers(HttpMethod.PUT,"/api/post/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/api/post/**").authenticated()
                 .anyRequest().permitAll()
 
 //                .and()

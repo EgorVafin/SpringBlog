@@ -16,7 +16,7 @@ spring:
       initialize-schema: always
       table-name: SPRING_SESSION
   datasource:
-    password: 'root'
+    password: '5AaKk2+S'
     username: root
     url: jdbc:mysql://localhost:3306/spring_blog?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Europe/Moscow
   flyway:
