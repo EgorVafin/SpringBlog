@@ -27,6 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.PUT,"/api/post/**").authenticated()
                 .antMatchers(HttpMethod.POST,"/api/post/**").authenticated()
+                .antMatchers(HttpMethod.POST,"/api/image/**").authenticated()
                 .anyRequest().permitAll()
 
 //                .and()
