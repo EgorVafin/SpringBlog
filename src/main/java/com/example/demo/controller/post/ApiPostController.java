@@ -1,16 +1,15 @@
 package com.example.demo.controller.post;
 
 import com.example.demo.api.response.ResultErrorsResponse;
+import com.example.demo.controller.post.request.AddCommentRequest;
 import com.example.demo.controller.post.request.CreateUpdatePostRequest;
+import com.example.demo.controller.post.request.ModerateRequest;
 import com.example.demo.controller.post.response.postDetail.RootPostResponse;
 import com.example.demo.controller.post.response.postDetail.PostDetailResponse;
 import com.example.demo.dao.PostRepository;
 import com.example.demo.model.Post;
 import com.example.demo.model.User;
-import com.example.demo.service.MyPostsService;
-import com.example.demo.service.PostCreateService;
-import com.example.demo.service.PostDetailService;
-import com.example.demo.service.PostResponseProcessor;
+import com.example.demo.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -40,6 +41,7 @@ public class ApiPostController {
     private final MyPostsService myPostsService;
     private final PostCreateService postCreateService;
     private final PostRepository postRepository;
+    private final PostModerationService postModerationService;
 
     @RequestMapping("/api/post")
     @ResponseBody
@@ -131,7 +133,23 @@ public class ApiPostController {
         } else {
             ResultErrorsResponse result = postCreateService.updatePost(post.get(), request, user);
             return new ResponseEntity<>(result, HttpStatus.OK);
-
         }
     }
+
+    @PostMapping("/api/moderate")
+    @ResponseBody
+    public ResultErrorsResponse moderatePost(@RequestBody ModerateRequest request) {
+
+        Optional<Post> post = postRepository.findById(request.getPost_id());
+        if (!post.isPresent()) {
+            return ResultErrorsResponse.errors(Map.of("error", "Post does not exist"));
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+
+        return postModerationService.moderate(user, post.get(), request.getDecision());
+    }
+
+
 }

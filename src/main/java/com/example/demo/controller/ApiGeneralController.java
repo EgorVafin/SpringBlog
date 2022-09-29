@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.api.response.InitResponse;
+import com.example.demo.api.response.ResultErrorsResponse;
 import com.example.demo.api.response.SettingsResponse;
 import com.example.demo.api.response.calendar.CalendarRootResponse;
 import com.example.demo.api.response.tag.TagRootResponse;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -64,6 +67,16 @@ public class ApiGeneralController {
     @PostMapping("/image")
     public String uploadImage(@RequestParam("image") MultipartFile file) {
 
+        String originFileName = file.getOriginalFilename();
+        String contentType = file.getContentType();
+        long fileSize = file.getSize();
+
+        if (fileSize > 10 * 1024 * 1024) {
+            ResultErrorsResponse resultErrorsResponse = ResultErrorsResponse.errors(Map.of("image", "Размер файла превышает допустимый размер"));
+
+        }
+
+
         int random = (int) (Math.random() * 100_000_000);
         String hash = passwordEncoder.encode(Integer.toString(random));
 
@@ -79,14 +92,13 @@ public class ApiGeneralController {
             folders[i] = lastPart.substring(i * folderLenght, i * folderLenght + (folderLenght));
         }
 
-        String originFileName = file.getOriginalFilename();
+
         fileName = lastPart.substring(3 * folderLenght) + originFileName.substring(originFileName.indexOf('.'));
 
         String finalFolderName = "";
         for (int i = 0; i < 3; i++) {
             finalFolderName = finalFolderName + "\\" + folders[i];
         }
-
 
         Path root = Paths.get(UPLOADS);
 
@@ -103,6 +115,7 @@ public class ApiGeneralController {
             Files.createDirectories(path2);
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder. Error: ", e);
+
         }
 
         System.out.println(finalFolderName);
@@ -116,7 +129,6 @@ public class ApiGeneralController {
             throw new RuntimeException("Could not save to store. Error: ", e);
         }
 
-
-        return "";
+        return finalFolderName + "\\" + fileName;
     }
 }
