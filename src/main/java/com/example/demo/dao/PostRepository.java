@@ -9,6 +9,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PostRepository extends PagingAndSortingRepository<Post, Integer> {
 
@@ -59,6 +61,9 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
     public Page<PostProjection> userActivePostsWithStatus(Pageable pageable,
                                                           @Param("userId") int userId,
                                                           @Param("moderationStatus") Status moderationStatus);
+
+    @Query(value = "FROM Post p join fetch p.comments")
+    public List<Post> allPostWithComments();
 
 
 }
