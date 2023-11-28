@@ -118,7 +118,7 @@ public class ApiGeneralController {
 
         }
 
-        System.out.println(finalFolderName);
+        //System.out.println(finalFolderName);
 
         finalFolderName = finalFolderName.substring(1, finalFolderName.length());
         System.out.println(finalFolderName);

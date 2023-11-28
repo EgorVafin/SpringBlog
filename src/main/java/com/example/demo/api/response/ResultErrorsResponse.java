@@ -12,7 +12,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class ResultErrorsResponse {
 
-    private boolean result;
+
     private Map<String, String> errors;
 
     public static ResultErrorsResponse success() {

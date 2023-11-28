@@ -1,9 +1,11 @@
 package com.example.demo.controller.post;
 
 import com.example.demo.api.response.ResultErrorsResponse;
+import com.example.demo.api.response.ResultResponse;
 import com.example.demo.controller.post.request.AddCommentRequest;
 import com.example.demo.controller.post.request.CreateUpdatePostRequest;
 import com.example.demo.controller.post.request.ModerateRequest;
+import com.example.demo.controller.post.request.PostLikeRequest;
 import com.example.demo.controller.post.response.postDetail.RootPostResponse;
 import com.example.demo.controller.post.response.postDetail.PostDetailResponse;
 import com.example.demo.dao.PostRepository;
@@ -98,7 +100,7 @@ public class ApiPostController {
     @RequestMapping("/api/post/my")
     @ResponseBody
     public RootPostResponse myPosts(@RequestParam(value = "offset", defaultValue = "0") @Min(0) int offset,
-                                    @RequestParam(value = "limit", defaultValue = "0") @Min(1) int limit,
+                                    @RequestParam(value = "limit", defaultValue = "1") @Min(1) int limit,
                                     @RequestParam(value = "status", required = true) ModerationStatus status) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -149,6 +151,20 @@ public class ApiPostController {
         User user = (User) authentication.getPrincipal();
 
         return postModerationService.moderate(user, post.get(), request.getDecision());
+    }
+
+    @PostMapping("/api/post/like")
+    @ResponseBody
+    public ResultResponse likePost(@RequestBody PostLikeRequest request) {
+        Optional<Post> post = postRepository.findById(request.getPost_id());
+        if (!post.isPresent()) {
+            return new ResultResponse(false);
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+
+
     }
 
 
